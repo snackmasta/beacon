@@ -1,27 +1,47 @@
-# Save this script as "BackgroundScript.ps1"
+# Function to perform the actual work in the job
+function Start-MyJob {
+    param (
+        [string]$jobName
+    )
 
-# Your background task goes here
-function RunInBackground {
-    while ($true) {
-        Write-Host "Background task is running..."
-        Start-Sleep -Seconds 10  # Adjust the sleep duration as needed
-    }
+    Write-Host "Starting job: $jobName"
+
+    # Simulate some work in the job (replace this with your actual job logic)
+    Start-Sleep -Seconds 15
+
+    Write-Host "Job completed: $jobName"
 }
 
-# Run the background task in a new PowerShell background job
-$backgroundJob = Start-Job -ScriptBlock { RunInBackground }
+# Main script
+$jobCounter = 1
 
-# Optionally, you can wait for the job to finish, or you can continue with other tasks
-# Wait-Job $backgroundJob
+while ($true) {
+    $jobName = "Job$jobCounter"
 
-# Display a message indicating that the script is running in the background
-Write-Host "PowerShell script is running in the background. Press Ctrl+C to exit."
+    # Start a new job
+    $job = Start-Job -ScriptBlock {
+        param ($name)
+        Start-MyJob -jobName $name
+    } -ArgumentList $jobName
 
-# Keep the script running to allow the background job to continue
-try {
-    Wait-Event -Timeout ([System.Threading.Timeout]::Infinite)
-} finally {
-    # Clean up: Stop the background job when the script is terminated
-    Stop-Job $backgroundJob
-    Remove-Job $backgroundJob
+    # Wait for the job to complete or timeout after 10 seconds
+    $result = $null
+    $timeout = 10
+
+    do {
+        $result = Receive-Job $job -ErrorAction SilentlyContinue
+        Start-Sleep -Seconds 1
+        $timeout--
+    } while ($result -eq $null -and $timeout -gt 0)
+
+    # If the job is still running, pause the loop
+    if ($result -eq $null) {
+        Write-Host "Pausing the loop as the job $jobName is running for more than 10 seconds."
+        Remove-Job $job
+        Start-Sleep -Seconds 60  # Adjust the pause duration as needed
+    } else {
+        Write-Host "Job $jobName completed successfully."
+    }
+
+    $jobCounter++
 }
