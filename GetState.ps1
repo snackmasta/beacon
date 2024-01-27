@@ -13,7 +13,7 @@ while ($true) {
     $state = $response.clients.$client.state
 
     # Display the value
-    Write-Output $state
+    #Write-Output $state
 
     # If state equals 1, run a script
     if ($state -eq 1) {
