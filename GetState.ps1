@@ -10,10 +10,16 @@ while ($true) {
 
     # Access the value of a specific child object property
     # Replace "ChildObjectName" and "PropertyName" with the actual names in your JSON structure
-    $childObjectValue = $response.clients.client_2.state
+    $state = $response.clients.$client.state
 
     # Display the value
-    Write-Output $childObjectValue
+    Write-Output $state
+
+    # If state equals 1, run a script
+    if ($state -eq 1) {
+        # Replace "PathToYourScript.ps1" with the actual path to your script
+        C:\temp\beacon\TCPState.ps1
+    }
 
     # Wait for 5 seconds before the next iteration
     Start-Sleep -Seconds 5
