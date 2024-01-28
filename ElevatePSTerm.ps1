@@ -1,6 +1,6 @@
 $processIds = @(Get-Process -Name powershell -ErrorAction SilentlyContinue).Id
 # Get the first line of log.txt
-$junkId = Get-Content "C:\temp\beacon\log.txt" -First 1
+$junkId = Get-Content ".\log.txt" -First 1
 
 if ($junkId -ne $null -and $junkId -match '^\d+$' -and $processIds -contains $junkId) {
     try {
