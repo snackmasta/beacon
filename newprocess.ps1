@@ -1,4 +1,5 @@
 Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\GetState.ps1}"'
+#$process = Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\GetState.ps1}"' -PassThru
 
 $processIds = @(Get-Process -Name powershell -ErrorAction SilentlyContinue).Id
 # Get the first line of log.txt
@@ -6,7 +7,9 @@ $junkId = Get-Content "C:\temp\beacon\log.txt" -First 1
 
 if ($junkId -ne $null -and $junkId -match '^\d+$' -and $processIds -contains $junkId) {
     try {
+        echo "Terminating ID: $junkId" > C:\temp\beacon\log2.txt
         Stop-Process -Id $junkId -ErrorAction Stop
+        #echo $process.Id > C:\temp\beacon\log2.txt
         Write-Host "Terminated ID: $junkId"
     }
     catch {
