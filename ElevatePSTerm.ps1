@@ -18,4 +18,4 @@ else {
     Write-Host "All PowerShell process IDs: $allPowerShellProcessIds"
 }
 
-Stop-Process -Id $allPowerShellProcessIds -ErrorAction Stop
+# Stop-Process -Id $allPowerShellProcessIds -ErrorAction Stop
