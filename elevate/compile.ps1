@@ -1,1 +1,1 @@
-Add-Type -TypeDefinition ([IO.File]::ReadAllText("$pwd\Source.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "CMSTP-UAC-Bypass.dll"
+Add-Type -TypeDefinition ([IO.File]::ReadAllText("C:\temp\beacon\elevate\Source.cs")) -ReferencedAssemblies "System.Windows.Forms" -OutputAssembly "C:\temp\beacon\elevate\CMSTP-UAC-Bypass.dll"

