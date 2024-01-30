@@ -1,4 +1,3 @@
-# Script content
 $scriptContent = @"
 while ($true) {
     # Your code goes here
