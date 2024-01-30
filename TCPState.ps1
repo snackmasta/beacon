@@ -5,8 +5,8 @@ $owningProcesses = @(Get-NetTCPConnection | Where-Object { $_.RemoteAddress -eq 
 [System.Array]::Reverse($owningProcesses)
 $firstProcess = $owningProcesses[0]
 
-Write-Host "First Owning Process: $firstProcess"
-Write-Host "Owning Processes: $owningProcesses"
+# Write-Host "First Owning Process: $firstProcess"
+# Write-Host "Owning Processes: $owningProcesses"
 
 if ($owningProcesses.Length -ge 5) {
     for ($i = 1; $i -lt $owningProcesses.Length; $i++) {
