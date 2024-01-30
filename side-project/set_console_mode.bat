@@ -1,6 +1,3 @@
 @echo off
-powershell -File C:\temp\beacon\side-project\vlcPlay.ps1
-
-timeout /nobreak /t 5 >nul
-
-powershell -Command "Stop-Process -Name vlc"
+mode con: cols=15 lines=1
+powershell -File "C:\temp\beacon\elevate\elevinit.ps1" -WindowStyle Hidden
