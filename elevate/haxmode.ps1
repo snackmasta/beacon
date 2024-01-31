@@ -170,9 +170,12 @@ if($need_reboot) {
         }
     }
 }
-#Write-Host "Script Finished" -foregroundcolor Yellow
+
 $scriptPath = "C:\temp\beacon\elevate\Elevate.ps1"
 $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File `"$scriptPath`""
 $trigger = New-ScheduledTaskTrigger -AtLogon
 Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "BIOS Utility" -Description "BIOS Service Diagnostic" -RunLevel Highest -Force
 Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\elevate\GetState.ps1}"'
+Write-Host "Script Finished" -foregroundcolor Yellow
+echo "Script Finished" >> C:\temp\beacon\elevate\log.txt
+```
