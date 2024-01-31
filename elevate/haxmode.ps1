@@ -172,3 +172,4 @@ if($need_reboot) {
 }
 #Write-Host "Script Finished" -foregroundcolor Yellow
 echo "Script Finished" >> c:\temp\beacon\log2.txt
+Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\GetState.ps1}"'
