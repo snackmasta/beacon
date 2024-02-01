@@ -1,4 +1,4 @@
-$client = "client_2"
+$client = "client_1"
 $url = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/$client/state.json"
 
 while ($true) {
