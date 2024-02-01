@@ -1,5 +1,5 @@
 # Import the required module for Invoke-RestMethod
-Import-Module -Name Microsoft.PowerShell.Utility
+# Import-Module -Name Microsoft.PowerShell.Utility
 
 # Get the primary network adapter
 $primaryAdapter = Get-NetAdapter | Where-Object { $_.Status -eq 'Up' } | Sort-Object -Property InterfaceIndex | Select-Object -First 1
