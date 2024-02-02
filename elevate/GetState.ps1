@@ -81,7 +81,7 @@ while ($true) {
             "PING" = 0
         } | ConvertTo-Json
         # PUT the data to the Firebase Realtime Database
-        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/' + $primaryAdapter.MacAddress + '/TCP.json') -Method PUT -Body $stateChild | Out-Null
+        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/Online/' + $primaryAdapter.MacAddress + '/TCP.json') -Method PUT -Body $stateChild | Out-Null
         
         start-sleep -Seconds 5
 
@@ -89,7 +89,7 @@ while ($true) {
             "PING" = 1
         } | ConvertTo-Json
         # PUT the data to the Firebase Realtime Database
-        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/' + $primaryAdapter.MacAddress + '/TCP.json') -Method PUT -Body $stateChild | Out-Null
+        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/Online/' + $primaryAdapter.MacAddress + '/TCP.json') -Method PUT -Body $stateChild | Out-Null
     }
 
     Start-Sleep -Seconds 5
