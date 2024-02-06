@@ -96,7 +96,7 @@ if($(GET-Service -Name WinDefend).Status -eq "Running") {
 } else {
     #Write-Host "    [+] WinDefend Service not running"
 }
-$link_reboot = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\disable-defender.lnk"
+#$link_reboot = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\disable-defender.lnk"
 Remove-Item -Force "$link_reboot" -ErrorAction 'ignore' # Remove the link (only execute once after reboot)
 
 if($need_reboot) {
