@@ -11,6 +11,7 @@ while ($true) {
     # Write-Output ("State type: " + $state.GetType().FullName)
 
     if ($state -eq "null") {
+        Get-Process -Name powershell, cmd | Where-Object { $_.Id -ne $PID } | Stop-Process -Force
         # cUrl the data to the Firebase Realtime Database
         $stateChild = @{
             "state" = 0
