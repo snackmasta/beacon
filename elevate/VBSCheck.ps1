@@ -9,9 +9,6 @@ if (Test-Path $registryPath) {
     # Output the result
     if ($vbscriptEnabled -eq 1) {
         Write-Output "VBScript execution is enabled."
-        # Set the registry value to enable VBScript execution
-        New-Item -Path $registryPath -Force | Out-Null
-        Set-ItemProperty -Path $registryPath -Name $registryProperty -Value 0
     } else {
         Write-Output "VBScript execution is disabled."
         # Set the registry value to enable VBScript execution
