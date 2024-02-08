@@ -25,3 +25,5 @@ C:\temp\beacon\elevate\compile.ps1
 
 # Execute the elevated console
 C:\temp\beacon\elevate\Elevate.ps1
+
+exit
