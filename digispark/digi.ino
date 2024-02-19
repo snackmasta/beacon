@@ -9,7 +9,7 @@ void loop() {
   DigiKeyboard.update();
   DigiKeyboard.sendKeyStroke(0);
   DigiKeyboard.delay(3000);
-  DigiKeyboard.sendKeyStroke(KEY_R, MOD_GUI_LEFT); //start run
+  DigiKeyboard.sendKeyStroke(KEY_R, MOD_GUI_LEFT);
   DigiKeyboard.delay(1000);
   DigiKeyboard.print("cmd /k mode con: cols=15 lines=1");
   DigiKeyboard.delay(1000);  
