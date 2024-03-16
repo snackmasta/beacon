@@ -1,10 +1,10 @@
-$primaryAdapter = Get-NetAdapter | Where-Object { $_.Status -eq 'Up' } | Sort-Object -Property InterfaceIndex | Select-Object -First 1
-$url = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/$($primaryAdapter.MacAddress)/state.json"
 # PING the Firebase Realtime Database (url = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/PING")
-$pingUrl = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/PING.json"
-$delayUrl = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/delay.json"
 
 while ($true) {
+    $primaryAdapter = Get-NetAdapter | Where-Object { $_.Status -eq 'Up' } | Sort-Object -Property InterfaceIndex | Select-Object -First 1
+    $url = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/clients/$($primaryAdapter.MacAddress)/state.json"
+    $pingUrl = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/PING.json"
+    $delayUrl = "https://curronebox-default-rtdb.asia-southeast1.firebasedatabase.app/delay.json"
     $response = Invoke-RestMethod -Uri $url
     $state = $response
     $ping = Invoke-RestMethod -Uri $pingUrl
